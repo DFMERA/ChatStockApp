@@ -249,6 +249,8 @@ ServiceFabricBackup/
 *.mdf
 *.ldf
 *.ndf
+# DZM Application DB
+ChatStockApp.db
 
 # Business Intelligence projects
 *.rdl.data
