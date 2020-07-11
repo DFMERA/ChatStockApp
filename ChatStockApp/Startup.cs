@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using ChatStockApp.ChatHubs;
+using Microsoft.AspNetCore.Identity;
+using ChatStockApp.Areas.Identity.Data;
 
 namespace ChatStockApp
 {
@@ -31,6 +33,8 @@ namespace ChatStockApp
             //DZM Add the service for identity db
             services.AddDbContext<IdentityDbContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("IndentityDbContextConnection")));
+
+            //services.AddDefaultIdentity<User>();
 
             //DZM Add the service for SignalR connection
             services.AddSignalR();

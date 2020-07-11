@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using ChatStockApp.Areas.Identity.Data
+@model ChatStockApp.Models.Message
 
 @{
     ViewData["Title"] = "Home Page";
@@ -7,41 +8,37 @@
 @inject SignInManager<User> SignInManager
 @inject UserManager<User> UserManager
 
-<div class="text-center">
-    <div class="container">
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-2">User</div>
-            @if (SignInManager.IsSignedIn(User))
-            {
-                <div class="col-4"><input type="text" id="userInput" readonly="readonly" value="@UserManager.GetUserName(User)" /></div>
-            }
-            else
-            {
-                <div class="col-4"><input type="text" id="userInput" value="Enter your name"/></div>
-            }
+    <div class="text-center">
+        <div class="container">
+            <form asp-action="Index" enctype="multipart/form-data" method="post">
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-2">User</div>
+                    <div class="col-4"><input type="text" id="userInput" asp-for="User" /></div>
+                </div>
+                <div class="row">
+                    <div class="col-2">Message</div>
+                    <div class="col-4"><input type="text" id="messageInput" asp-for="MessageText" /></div>
+                </div>
+                <div class="row">&nbsp;</div>
+                <div class="row">
+                    <div class="col-6">
+                        <input type="submit" id="sendButton" value="Send Message" />
+                    </div>
+                </div>
+            </form>
         </div>
         <div class="row">
-            <div class="col-2">Message</div>
-            <div class="col-4"><input type="text" id="messageInput" /></div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-6">
-                <input type="button" id="sendButton" value="Send Message" />
+            <div class="col-12">
+                <hr />
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
+        <div class="row">
+            <div class="col-6">
+                <ul id="messagesList"></ul>
+            </div>
         </div>
+        <script src="~/js/signalr/dist/browser/signalr.js"></script>
+        <script src="~/js/chat.js"></script>
+
     </div>
-    <div class="row">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
-        </div>
-    </div>
-    <script src="~/js/signalr/dist/browser/signalr.js"></script>
-    <script src="~/js/chat.js"></script>
-</div>

@@ -6,26 +6,45 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using ChatStockApp.Models;
+using Microsoft.AspNetCore.Identity;
+using ChatStockApp.Areas.Identity.Data;
 
 namespace ChatStockApp.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-
-        public HomeController(ILogger<HomeController> logger)
+        private readonly UserManager<User> _userManager;
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
         {
             _logger = logger;
+            _userManager = userManager;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            var message = new Message();
+            if (User.Identity.IsAuthenticated)
+            {
+                var currentUser = await _userManager.GetUserAsync(User);
+                message.User = currentUser.Email;
+            }
+            else
+            {
+                message.User = "Anonymous";
+            }
+            
+            return View(message);
         }
 
-        public IActionResult Privacy()
+        [HttpPost]
+        public async Task<IActionResult> Index(Message message)
         {
-            return View();
+            //TO DO:
+            //Create the bot hear
+            //ChatStockApp.ChatHubs.ChatHub hub = new ChatHubs.ChatHub();
+            //await hub.SendMessage("prueba", "prueba");
+            return View(message);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
