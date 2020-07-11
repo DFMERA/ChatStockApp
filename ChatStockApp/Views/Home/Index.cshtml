@@ -1,8 +1,47 @@
-﻿@{
+﻿@using Microsoft.AspNetCore.Identity
+@using ChatStockApp.Areas.Identity.Data
+
+@{
     ViewData["Title"] = "Home Page";
 }
+@inject SignInManager<User> SignInManager
+@inject UserManager<User> UserManager
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <div class="container">
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-2">User</div>
+            @if (SignInManager.IsSignedIn(User))
+            {
+                <div class="col-4"><input type="text" id="userInput" readonly="readonly" value="@UserManager.GetUserName(User)" /></div>
+            }
+            else
+            {
+                <div class="col-4"><input type="text" id="userInput" value="Enter your name"/></div>
+            }
+        </div>
+        <div class="row">
+            <div class="col-2">Message</div>
+            <div class="col-4"><input type="text" id="messageInput" /></div>
+        </div>
+        <div class="row">&nbsp;</div>
+        <div class="row">
+            <div class="col-6">
+                <input type="button" id="sendButton" value="Send Message" />
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            <hr />
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-6">
+            <ul id="messagesList"></ul>
+        </div>
+    </div>
+    <script src="~/js/signalr/dist/browser/signalr.js"></script>
+    <script src="~/js/chat.js"></script>
 </div>

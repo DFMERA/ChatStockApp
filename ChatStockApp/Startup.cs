@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using ChatStockApp.ChatHubs;
 
 namespace ChatStockApp
 {
@@ -27,8 +28,12 @@ namespace ChatStockApp
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            //DZM Add the service for identity db
             services.AddDbContext<IdentityDbContext>(options =>
             options.UseSqlite(Configuration.GetConnectionString("IndentityDbContextConnection")));
+
+            //DZM Add the service for SignalR connection
+            services.AddSignalR();
 
         }
 
@@ -56,6 +61,7 @@ namespace ChatStockApp
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+                endpoints.MapHub<ChatHub>("/chathub");
             });
         }
     }
