@@ -63,9 +63,10 @@ namespace ChatStockApp.Controllers
                     }
                     finally
                     {
-                        await _chatHub.Clients.All.SendAsync("ReceiveMessage", "Bot", botMsg);
+                        var message = new Message("Bot", botMsg);
+                        await _chatHub.Clients.All.SendAsync("ReceiveMessage", message);
                     }
-
+                    //TO DO: Save a history of the bot requests per user
                     break;
             }
             
