@@ -25,4 +25,18 @@ document.getElementById("sendButton").addEventListener("click", function (event)
         return console.error(err.toString());
     });
     event.preventDefault();
+    if (message.substring(0, 1) == "/") {
+        $.ajax({
+            url: "Home/Listen",
+            data: { user: user, messageTxt: message },
+            success: function (data) {
+                //call is successfully completed and we got result in data
+            },
+            error: function (err, ajaxOptions, thrownError) {
+                console.error(err.toString());
+            }
+        });
+    }
+    
 });
+

@@ -8,6 +8,8 @@ using Microsoft.Extensions.Logging;
 using ChatStockApp.Models;
 using Microsoft.AspNetCore.Identity;
 using ChatStockApp.Areas.Identity.Data;
+using Microsoft.AspNetCore.SignalR;
+using ChatStockApp.ChatHubs;
 
 namespace ChatStockApp.Controllers
 {
@@ -15,10 +17,12 @@ namespace ChatStockApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager)
+        private readonly IHubContext<ChatHub> _chatHub;
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, IHubContext<ChatHub> chatHub)
         {
             _logger = logger;
             _userManager = userManager;
+            _chatHub = chatHub;
         }
 
         public async Task<IActionResult> Index()
@@ -37,14 +41,35 @@ namespace ChatStockApp.Controllers
             return View(message);
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(Message message)
+        [HttpGet]
+        public async Task<IActionResult> Listen(string user, string messageTxt)
         {
-            //TO DO:
-            //Create the bot hear
-            //ChatStockApp.ChatHubs.ChatHub hub = new ChatHubs.ChatHub();
-            //await hub.SendMessage("prueba", "prueba");
-            return View(message);
+            //DZM: The bot is created here
+            var command = messageTxt.Split('=');
+            decimal respValue;
+            string botMsg = "";
+
+            switch (command[0])
+            {
+                case "/stock":
+                    try
+                    {
+                        respValue = await Services.UtilServices.GetStockValue(command[1].ToLower());
+                        botMsg = String.Format("{0} quote is ${1} per share", command[1].ToUpper(), respValue.ToString());
+                    }
+                    catch
+                    {
+                        botMsg = "Please enter a valid stock symbol";
+                    }
+                    finally
+                    {
+                        await _chatHub.Clients.All.SendAsync("ReceiveMessage", "Bot", botMsg);
+                    }
+
+                    break;
+            }
+            
+            return Ok(botMsg);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

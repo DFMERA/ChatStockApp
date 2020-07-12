@@ -10,7 +10,6 @@
 
     <div class="text-center">
         <div class="container">
-            <form asp-action="Index" enctype="multipart/form-data" method="post">
                 <div class="row">&nbsp;</div>
                 <div class="row">
                     <div class="col-2">User</div>
@@ -26,7 +25,6 @@
                         <input type="submit" id="sendButton" value="Send Message" />
                     </div>
                 </div>
-            </form>
         </div>
         <div class="row">
             <div class="col-12">
@@ -38,7 +36,10 @@
                 <ul id="messagesList"></ul>
             </div>
         </div>
+
+        <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/js/signalr/dist/browser/signalr.js"></script>
         <script src="~/js/chat.js"></script>
+        
 
     </div>
