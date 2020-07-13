@@ -17,7 +17,11 @@ connection.on("ReceiveMessage", function (message) {
     var msg = message.messageText.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     var li = document.createElement("li");
     li.innerHTML = '<strong>' + message.user + '</strong>:&nbsp;&nbsp;' + msg;
-    document.getElementById("messagesList").appendChild(li);
+    var list = document.getElementById("messagesList");
+    list.appendChild(li);
+    if (list.childElementCount >50) {
+        list.removeChild(list.childNodes[0]);
+    }
 });
 
 connection.start().then(function () {
