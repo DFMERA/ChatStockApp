@@ -45,32 +45,14 @@ namespace ChatStockApp.Controllers
         public async Task<IActionResult> Listen(string user, string messageTxt)
         {
             //DZM: The bot is created here
-            var command = messageTxt.Split('=');
-            decimal respValue;
-            string botMsg = "";
-
-            switch (command[0])
-            {
-                case "/stock":
-                    try
-                    {
-                        respValue = await Services.UtilServices.GetStockValue(command[1].ToLower());
-                        botMsg = String.Format("{0} quote is ${1} per share", command[1].ToUpper(), respValue.ToString());
-                    }
-                    catch
-                    {
-                        botMsg = "Please enter a valid stock symbol";
-                    }
-                    finally
-                    {
-                        var message = new Message("Bot", botMsg);
-                        await _chatHub.Clients.All.SendAsync("ReceiveMessage", message);
-                    }
-                    //TO DO: Save a history of the bot requests per user
-                    break;
-            }
+            string respValue;
             
-            return Ok(botMsg);
+            respValue = await Services.UtilServices.PostBotStockValue(messageTxt);
+            //TODO: Replace the azure function for a MQ
+            var message = new Message("Bot", respValue);
+            await _chatHub.Clients.All.SendAsync("ReceiveMessage", message);
+
+            return Ok(respValue);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
