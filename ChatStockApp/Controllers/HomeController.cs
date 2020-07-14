@@ -10,6 +10,8 @@ using Microsoft.AspNetCore.Identity;
 using ChatStockApp.Areas.Identity.Data;
 using Microsoft.AspNetCore.SignalR;
 using ChatStockApp.ChatHubs;
+using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ChatStockApp.Controllers
 {
@@ -18,11 +20,14 @@ namespace ChatStockApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserManager<User> _userManager;
         private readonly IHubContext<ChatHub> _chatHub;
-        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, IHubContext<ChatHub> chatHub)
+        private readonly IConfiguration _configuration;
+
+        public HomeController(ILogger<HomeController> logger, UserManager<User> userManager, IHubContext<ChatHub> chatHub, IConfiguration configuration)
         {
             _logger = logger;
             _userManager = userManager;
             _chatHub = chatHub;
+            _configuration = configuration;
         }
 
         public async Task<IActionResult> Index()
@@ -45,14 +50,32 @@ namespace ChatStockApp.Controllers
         public async Task<IActionResult> Listen(string user, string messageTxt)
         {
             //DZM: The bot is created here
-            string respValue;
+            string urlString = _configuration.GetSection("AzureFunctionsUrl").Value;
+            string respValue = await Services.UtilServices.PostBotStockValue(messageTxt, urlString);
             
-            respValue = await Services.UtilServices.PostBotStockValue(messageTxt);
-            //TODO: Replace the azure function for a MQ
-            var message = new Message("Bot", respValue);
-            await _chatHub.Clients.All.SendAsync("ReceiveMessage", message);
+            //TODO: Save the history of the messages per user
 
             return Ok(respValue);
+        }
+
+        public async Task<string> ListenTest(string messageTxt, string urlTest)
+        {
+            //DZM: The bot is created here
+            string urlString = urlTest;
+            string respValue = await Services.UtilServices.PostBotStockValue(messageTxt, urlString);
+
+            //TODO: Save the history of the messages per user
+
+            return respValue;
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ListenBot(string messageTxt)
+        {
+            var message = new Message("Bot", messageTxt);
+            await _chatHub.Clients.All.SendAsync("ReceiveMessage", message);
+
+            return Ok(messageTxt);
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

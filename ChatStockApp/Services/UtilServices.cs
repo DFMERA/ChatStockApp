@@ -14,9 +14,7 @@ namespace ChatStockApp.Services
     {
         private const string STOCK_URL= "https://stooq.com/q/l/?s=#SYMBOL#&f=sd2t2ohlcv&h&e=csv";
 
-        private const string AZURE_URL = "https://dfmeramyfirstazurefunction.azurewebsites.net/api/ChatStockBot?code=BXfKFeyLHIackk6fMmLkTkevaqjtW4piUDaWQWcx1RPKuJ7sxB2SwQ==";
-
-        public static async Task<decimal> GetStockValue(string symbol)
+        public static async Task<decimal> GetStockValueTest(string symbol)
         {
             WebClient myWebClient = new WebClient();
 
@@ -34,14 +32,14 @@ namespace ChatStockApp.Services
             return value;
         }
 
-        public static async Task<string> PostBotStockValue(string messageTxt)
+        public static async Task<string> PostBotStockValue(string messageTxt, string urlString)
         {
             try
             {
-
                 HttpClient myClient = new HttpClient();
 
-                string urlString = AZURE_URL;
+                //string urlString = Environment.GetEnvironmentVariable("AzureFunctionsUrl");
+
                 Uri uriString = new Uri(urlString);
                 var jsonBody = "{\"messageTxt\": \"" + messageTxt + "\"}";
                 var resp = await myClient.PostAsync(uriString, new StringContent(jsonBody, Encoding.UTF8, "application/json")); ;

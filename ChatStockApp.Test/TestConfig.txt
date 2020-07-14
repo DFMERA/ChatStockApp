@@ -1,0 +1,5 @@
+﻿URL TEST
+/stock=aapl.us
+/stock=msft.us
+/stock=amzn.us
+/stock=eurusd

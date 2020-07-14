@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30128.74
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatStockApp", "ChatStockApp\ChatStockApp.csproj", "{009699C6-3D49-4AB9-9556-74E3B154A215}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatStockApp", "ChatStockApp\ChatStockApp.csproj", "{009699C6-3D49-4AB9-9556-74E3B154A215}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatStockBotFunction", "ChatStockBotFunction\ChatStockBotFunction.csproj", "{4964EE01-0992-4986-AF04-15623378C885}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ChatStockQueue", "ChatStockQueue\ChatStockQueue.csproj", "{73F9CD6D-9F3D-4F71-BC1D-6B4A3C95E73A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatStockApp.Test", "ChatStockApp.Test\ChatStockApp.Test.csproj", "{BCE9F8EB-83FB-4771-9D04-02056C8F8BFE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +21,18 @@ Global
 		{009699C6-3D49-4AB9-9556-74E3B154A215}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{009699C6-3D49-4AB9-9556-74E3B154A215}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{009699C6-3D49-4AB9-9556-74E3B154A215}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4964EE01-0992-4986-AF04-15623378C885}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4964EE01-0992-4986-AF04-15623378C885}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4964EE01-0992-4986-AF04-15623378C885}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4964EE01-0992-4986-AF04-15623378C885}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73F9CD6D-9F3D-4F71-BC1D-6B4A3C95E73A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73F9CD6D-9F3D-4F71-BC1D-6B4A3C95E73A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73F9CD6D-9F3D-4F71-BC1D-6B4A3C95E73A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73F9CD6D-9F3D-4F71-BC1D-6B4A3C95E73A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BCE9F8EB-83FB-4771-9D04-02056C8F8BFE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BCE9F8EB-83FB-4771-9D04-02056C8F8BFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BCE9F8EB-83FB-4771-9D04-02056C8F8BFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BCE9F8EB-83FB-4771-9D04-02056C8F8BFE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
