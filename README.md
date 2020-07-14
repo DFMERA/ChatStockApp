@@ -5,7 +5,7 @@
 # requirements
 
 # Allow registered users to log in and talk
-As a chat server and clientes I used SignalR with JavaScript
+To accomplish this requirement I created a mvc .net core web app. As a chat server and clientes I used SignalR with JavaScript
 
 # Allow users to post messages as commands
 To accomplish this requirement I created a decupled bot in Azure Functions. In order to work the appsetting file needs the Azure function URL
